@@ -1,1 +1,1 @@
-# Medicine-Inventory-Manager-Frontend
+# Frontend
