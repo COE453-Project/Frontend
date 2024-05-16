@@ -36,7 +36,7 @@ function Medicines() {
 
   return (
     <div >
-        <h1>Medicines</h1>
+        <h1>Medicine inventory manager</h1>
         <button onClick={goToAddMedicine}>Add Medicine</button>
         <hr></hr>
         <table>
