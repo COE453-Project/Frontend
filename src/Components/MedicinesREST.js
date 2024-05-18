@@ -2,34 +2,17 @@ import './Medicines.css';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-function Medicines() {
+function MedicinesREST() {
 
   let navigate = useNavigate();
   const [medicines, setMedicines] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("all");
 
-  let query = `query getMedicines($status: String){
-    getMedicines(status: $status){
-      id
-      name
-      description
-      productionDate
-      expiryDate
-      storedAtTimestamp
-      lastUpdatedTimestamp
-      expiryStatus
-      }
-  }`;
-
-  let deleteQuery = `mutation deleteMedicine($id: Int){
-    deleteMedicine(id: $id)
-  }`;
-
 
   useEffect(() => {
 
-    fetch('http://localhost:3001', {
-      method: 'POST',
+    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/?status='+ selectedStatus, {
+      method: 'GET',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
@@ -39,17 +22,13 @@ function Medicines() {
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
         "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
       },
-      body: JSON.stringify({
-        query,
-        variables: {status: selectedStatus}
-      })
     })
       .then(response => response.json())
       .then(response => {
         console.log(response);
         return response;
       })
-      .then(({ data }) => setMedicines(data.getMedicines));
+      .then(({ data }) => setMedicines(data));
   }, [selectedStatus]);
 
  const goToAddMedicine = () => {
@@ -58,29 +37,13 @@ function Medicines() {
   }
 
   const delteMedicine = (id) => {
-    console.log(id);
-    fetch('http://localhost:3001', {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        "Access-Control-Allow-Credentials" : true,
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-        "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
-      },
-      body: JSON.stringify({
-        query: deleteQuery,
-        variables: {id:id}
-      })
+    fetch('http://localhost:3001/medicines/'+id, {
+      method: 'DELETE'
     })
-    .then(response => response.json())
-    .then(response => {
-      console.log(response);
-      return response;
-    })
-    .then(({ data }) => console.log(data.deleteMedicine));
+      .then(response => response.json())
+      .then(data => {
+        setMedicines(medicines.filter((medicine) => medicine.id !== id));
+      });
   }
 
   const updateMedicine = (id) => {
@@ -90,8 +53,8 @@ function Medicines() {
   const getMedicinesByStatus = (e) => {
     console.log(e);
     setSelectedStatus(e);
-    fetch('http://localhost:3001', {
-      method: 'POST',
+    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/?status='+ selectedStatus, {
+      method: 'GET',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
@@ -101,17 +64,13 @@ function Medicines() {
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
         "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
       },
-      body: JSON.stringify({
-        query: query,
-        variables: {status: e}
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        return response;
       })
-    })
-    .then(response => response.json())
-    .then(response => {
-      console.log(response);
-      return response;
-    })
-    .then(({ data }) => setMedicines(data.getMedicines));
+      .then(({ data }) => setMedicines(data));
   }
 
   return (
@@ -156,7 +115,7 @@ function Medicines() {
                 <td>
                   <button onClick={() => updateMedicine(medicine.id)}>Update</button>
                   <hr></hr>
-                  <button onClick={() => delteMedicine(medicine.id)}>Delete</button>
+                  <button onClick={delteMedicine}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -167,4 +126,4 @@ function Medicines() {
   );
 }
 
-export default Medicines;
+export default MedicinesREST;

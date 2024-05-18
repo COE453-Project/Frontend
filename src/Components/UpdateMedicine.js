@@ -8,11 +8,30 @@ import { useLocation } from 'react-router-dom';
 function UpdateMedicine() {
     const location = useLocation();
     let navigate = useNavigate();
+    let query = `query{
+        oneMedicine(id: ${location.state.id}){
+            name
+            description
+            productionDate
+            expiryDate
+          }
+      }`;
+
+    let queryUpdate = `mutation updateMedicine($id: Int, $name: String, $description: String, $productionDate: String, $expiryDate: String){
+        updateMedicine(id: $id, name: $name, description: $description, productionDate: $productionDate, expiryDate: $expiryDate){
+            name
+            description
+            productionDate
+            expiryDate
+            }
+    }`;
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [productionDate, setProductionDate] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
+    const [medicine, setMedicine] = useState({});
+
 
     const handleName = (e) => {
         setName(e.target.value);
@@ -31,18 +50,42 @@ function UpdateMedicine() {
     }
 
     useEffect(() => {
-        fetch('http://localhost:3001/medicines/' + location.state.id)
-            .then(response => response.json())
-            .then(data => {
-                setName(data.name);
-                setDescription(data.description);
-                setProductionDate(data.productionDate);
-                setExpiryDate(data.expiryDate);
-            });
-    }, [location.state.id]);
+        fetch('http://localhost:3001', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                "Access-Control-Allow-Credentials" : true,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+                "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+            },
+            body: JSON.stringify({
+                query: query,
+                variables: {id: location.state.id}
+              })
+    })
+        .then(response => response.json())
+        .then(response => {
+            return response;
+        })
+        .then(({ data }) => {
+            setName(data.oneMedicine.name);
+            setDescription(data.oneMedicine.description);
+            setProductionDate(data.oneMedicine.productionDate);
+            setExpiryDate(data.oneMedicine.expiryDate);
+        });
+
+        console.log(name);
+        console.log(description);
+        console.log(productionDate);
+        console.log(expiryDate);
+        
+    }, [location.state.id, name,description,productionDate,expiryDate]);
 
     const updateMedicine = () => {
-        fetch('http://localhost:3001/medicines/' + location.state.id, {
+        fetch('http://localhost:3001' + location.state.id, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -67,11 +110,11 @@ function UpdateMedicine() {
                 <tbody>
 
                     <tr>
-                        <th scope="col"><h2>Medicine Name</h2><input type="text" placeholder="Name" onChange={handleName}/></th>
+                        <th scope="col"><h2>Medicine Name</h2><input type="text" value={name} onChange={handleName}/></th>
                     </tr>
                     <tr>
                         <h2>Description</h2>
-                        <textarea placeholder="Description" rows="7" cols="50" onChange={handleDescription}></textarea>
+                        <textarea value={description} rows="7" cols="50" onChange={handleDescription}></textarea>
                     </tr>
                     <tr>
                         <td><h2>Production date</h2><input type="date" onChange={handleProductionDate}/></td>

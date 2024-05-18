@@ -6,6 +6,7 @@ import { Navigate } from 'react-router';
 import { Routes } from 'react-router-dom';
 import AddMedicine from './Components/AddMedicine';
 import UpdateMedicine from './Components/UpdateMedicine';
+import MedicinesREST from './Components/MedicinesREST';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/AddMedicine" element={<AddMedicine />} />
           <Route path="/" element={<Navigate to="/medicines" />} />
           <Route path="/UpdateMedicine" element={<UpdateMedicine />} />
+          <Route path="/medicinesREST" element={<MedicinesREST />} />
         </Routes>
       </BrowserRouter>
       

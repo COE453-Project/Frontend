@@ -5,6 +5,11 @@ table {
     font-size: 0.8rem;
     letter-spacing: 1px;
   }
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+}
   
   caption {
     caption-side: bottom;
