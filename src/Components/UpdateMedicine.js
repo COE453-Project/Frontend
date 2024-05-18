@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 
 
-function UpdateMedicine(props) {
+function UpdateMedicine() {
     const location = useLocation();
     let navigate = useNavigate();
 

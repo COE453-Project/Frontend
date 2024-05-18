@@ -8,11 +8,42 @@ function Medicines() {
   const [medicines, setMedicines] = useState([]);
 
 
-  // useEffect(() => {
-  //   fetch('http://localhost:3001/medicines')
-  //     .then(response => response.json())
-  //     .then(data => setMedicines(data));
-  // }, []);
+  useEffect(() => {
+    fetch('http://localhost:3001', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        "Access-Control-Allow-Credentials" : true,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+      },
+      body: JSON.stringify({
+        query: `
+          query {
+              getMedicines{
+                id
+                name
+                description
+                productionDate
+                expiryDate
+                stored
+                lastUpdate
+                status
+              }
+          }
+        `
+      })
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        return response;
+      })
+      .then(({ data }) => setMedicines(data.getMedicines));
+  }, []);
 
  const goToAddMedicine = () => {
   console.log("goToAddMedicine");
