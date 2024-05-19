@@ -38,7 +38,7 @@ function MedicinesREST() {
 
   const delteMedicine = (id) => {
     console.log(id);
-    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/deleteMedicine/'+id, {
+    fetch('https://backend-delete-medicine-olz2xjbmza-uc.a.run.app/'+id, {
       method: 'DELETE',
       mode: 'cors',
       headers: {

@@ -61,7 +61,7 @@ function UpdateMedicineREST() {
     // }, [location.state.id, name,description,productionDate,expiryDate]);
 
     const updateMedicine = () => {
-        fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/updateMedicine/' + location.state.id, {
+        fetch('https://backend-update-medicine-olz2xjbmza-uc.a.run.app/' + location.state.id, {
             method: 'PUT',
             mode: 'cors',
             headers: {
