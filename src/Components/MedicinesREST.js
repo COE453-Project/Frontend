@@ -11,7 +11,7 @@ function MedicinesREST() {
 
   useEffect(() => {
 
-    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/medicine/?status='+ selectedStatus, {
+    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/getAllMedicines/?status='+ selectedStatus, {
       method: 'GET',
       mode: 'cors',
       headers: {
@@ -26,28 +26,35 @@ function MedicinesREST() {
       .then(response => response.json())
       .then(response => {
         console.log(response);
+        setMedicines(response);
         return response;
       })
-      .then(({ data }) => setMedicines(data));
   }, [selectedStatus]);
 
  const goToAddMedicine = () => {
   console.log("goToAddMedicine");
-    navigate("/AddMedicine");
+    navigate("/AddMedicineREST");
   }
 
   const delteMedicine = (id) => {
-    fetch('http://localhost:3001/medicines/'+id, {
-      method: 'DELETE'
+    console.log(id);
+    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/deleteMedicine/'+id, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        "Access-Control-Allow-Credentials" : true,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+      },
     })
-      .then(response => response.json())
-      .then(data => {
-        setMedicines(medicines.filter((medicine) => medicine.id !== id));
-      });
+      .then(response => console.log(response))
   }
 
   const updateMedicine = (id) => {
-    navigate("/UpdateMedicine", {state: {id: id}});
+    navigate("/UpdateMedicineREST", {state: {id: id}});
   }
 
   const getMedicinesByStatus = (e) => {
@@ -115,7 +122,7 @@ function MedicinesREST() {
                 <td>
                   <button onClick={() => updateMedicine(medicine.id)}>Update</button>
                   <hr></hr>
-                  <button onClick={delteMedicine}>Delete</button>
+                  <button onClick={() => delteMedicine(medicine.id)}>Delete</button>
                 </td>
               </tr>
             ))}

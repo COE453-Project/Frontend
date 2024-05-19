@@ -28,7 +28,7 @@ function Medicines() {
 
   useEffect(() => {
 
-    fetch('http://localhost:3001', {
+    fetch('https://api-gateway-olz2xjbmza-uc.a.run.app', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -59,7 +59,7 @@ function Medicines() {
 
   const delteMedicine = (id) => {
     console.log(id);
-    fetch('http://localhost:3001', {
+    fetch('https://api-gateway-olz2xjbmza-uc.a.run.app', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -75,12 +75,12 @@ function Medicines() {
         variables: {id:id}
       })
     })
-    .then(response => response.json())
+    .then(response => console.log(response.status))
     .then(response => {
-      console.log(response);
       return response;
     })
-    .then(({ data }) => console.log(data.deleteMedicine));
+
+    window.location.reload();
   }
 
   const updateMedicine = (id) => {
@@ -90,7 +90,7 @@ function Medicines() {
   const getMedicinesByStatus = (e) => {
     console.log(e);
     setSelectedStatus(e);
-    fetch('http://localhost:3001', {
+    fetch('https://api-gateway-olz2xjbmza-uc.a.run.app', {
       method: 'POST',
       mode: 'cors',
       headers: {

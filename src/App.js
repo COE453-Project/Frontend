@@ -7,6 +7,8 @@ import { Routes } from 'react-router-dom';
 import AddMedicine from './Components/AddMedicine';
 import UpdateMedicine from './Components/UpdateMedicine';
 import MedicinesREST from './Components/MedicinesREST';
+import AddMedicineREST from './Components/AddMedicineREST';
+import UpdateMedicineREST from './Components/UpdateMedicineREST';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/" element={<Navigate to="/medicines" />} />
           <Route path="/UpdateMedicine" element={<UpdateMedicine />} />
           <Route path="/medicinesREST" element={<MedicinesREST />} />
+          <Route path="/AddMedicineREST" element={<AddMedicineREST />} />
+          <Route path="/UpdateMedicineREST" element={<UpdateMedicineREST />} />
         </Routes>
       </BrowserRouter>
       
