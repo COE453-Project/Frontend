@@ -34,34 +34,32 @@ function UpdateMedicineREST() {
         setExpiryDate(e.target.value);
     }
 
-    // useEffect(() => {
-    //     fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/'+ location.state.id , {
-    //         method: 'GET',
-    //         mode: 'cors',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json',
-    //             "Access-Control-Allow-Credentials" : true,
-    //             "Access-Control-Allow-Origin": "*",
-    //             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-    //             "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
-    //         },
-    // })
-    //     .then(response => response.json())
-    //     .then(response => {
-    //         return response;
-    //     })
-    //     .then(({ data }) => {
-    //         setName(data.name);
-    //         setDescription(data.description);
-    //     });
+    useEffect(() => {
+        fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/getOneMedicine/'+ location.state.id , {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                "Access-Control-Allow-Credentials" : true,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+                "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+            },
+    })
+        .then(async response => {
+            const data = await response.json()
+            console.log(data);
+            setName(data.name);
+            setDescription(data.description);
+        })
 
 
         
-    // }, [location.state.id, name,description,productionDate,expiryDate]);
+    }, [location.state.id, name,description,productionDate,expiryDate]);
 
     const updateMedicine = () => {
-        fetch('https://backend-update-medicine-olz2xjbmza-uc.a.run.app/' + location.state.id, {
+        fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/updateMedicine/' + location.state.id, {
             method: 'PUT',
             mode: 'cors',
             headers: {

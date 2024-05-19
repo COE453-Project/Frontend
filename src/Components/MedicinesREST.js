@@ -10,7 +10,6 @@ function MedicinesREST() {
 
 
   useEffect(() => {
-
     fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/getAllMedicines/?status='+ selectedStatus, {
       method: 'GET',
       mode: 'cors',
@@ -31,6 +30,11 @@ function MedicinesREST() {
       })
   }, [selectedStatus]);
 
+  const getMedicinesByStatus = (e) => {
+    console.log(e);
+    setSelectedStatus(e);
+  }
+
  const goToAddMedicine = () => {
   console.log("goToAddMedicine");
     navigate("/AddMedicineREST");
@@ -38,7 +42,7 @@ function MedicinesREST() {
 
   const delteMedicine = (id) => {
     console.log(id);
-    fetch('https://backend-delete-medicine-olz2xjbmza-uc.a.run.app/'+id, {
+    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/deleteMedicine/'+id, {
       method: 'DELETE',
       mode: 'cors',
       headers: {
@@ -55,29 +59,6 @@ function MedicinesREST() {
 
   const updateMedicine = (id) => {
     navigate("/UpdateMedicineREST", {state: {id: id}});
-  }
-
-  const getMedicinesByStatus = (e) => {
-    console.log(e);
-    setSelectedStatus(e);
-    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/?status='+ selectedStatus, {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        "Access-Control-Allow-Credentials" : true,
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-        "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
-      },
-    })
-      .then(response => response.json())
-      .then(response => {
-        console.log(response);
-        return response;
-      })
-      .then(({ data }) => setMedicines(data));
   }
 
   return (
