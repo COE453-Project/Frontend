@@ -11,7 +11,7 @@ function MedicinesREST() {
 
   useEffect(() => {
 
-    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/?status='+ selectedStatus, {
+    fetch('https://medicine-inventory-manager-api-gateway-dp55p9wv.ue.gateway.dev/medicine/?status='+ selectedStatus, {
       method: 'GET',
       mode: 'cors',
       headers: {
