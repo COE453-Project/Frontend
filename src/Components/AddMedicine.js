@@ -37,7 +37,7 @@ function AddMedicine() {
   };
 
   const addMedicine = () => {
-    fetch("http://localhost:3001", {
+    fetch("https://api-gateway-olz2xjbmza-uc.a.run.app", {
       method: "POST",
       mode: "cors",
       headers: {
