@@ -54,7 +54,11 @@ function MedicinesREST() {
         "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
       },
     })
-      .then(response => console.log(response))
+      .then(response => {
+        console.log(response);
+        window.location.reload();
+      })
+
   }
 
   const updateMedicine = (id) => {
@@ -63,7 +67,7 @@ function MedicinesREST() {
 
   return (
     <div >
-        <h1>Medicine inventory manager</h1>
+        <h1>Medicine Inventory Manager</h1>
         <div className='topBar'>
           <button onClick={goToAddMedicine}>Add Medicine</button>
           <select onChange={(event) => getMedicinesByStatus(event.target.value)}>

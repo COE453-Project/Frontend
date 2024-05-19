@@ -57,7 +57,7 @@ function Medicines() {
     navigate("/AddMedicine");
   }
 
-  const delteMedicine = (id) => {
+  const delteMedicine =  (id) => {
     console.log(id);
     fetch('https://api-gateway-olz2xjbmza-uc.a.run.app', {
       method: 'POST',
@@ -77,10 +77,10 @@ function Medicines() {
     })
     .then(response => console.log(response.status))
     .then(response => {
-      return response;
+      window.location.reload();
     })
 
-    window.location.reload();
+    
   }
 
   const updateMedicine = (id) => {
@@ -116,7 +116,7 @@ function Medicines() {
 
   return (
     <div >
-        <h1>Medicine inventory manager</h1>
+        <h1>Medicine Inventory Manager</h1>
         <div className='topBar'>
           <button onClick={goToAddMedicine}>Add Medicine</button>
           <select onChange={(event) => getMedicinesByStatus(event.target.value)}>
